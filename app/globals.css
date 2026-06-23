@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme {
+  /* Aurora Plum — deep plum/violet base with electric coral-pink + lilac.
+     Deliberately uncommon: not blue, not amber, not the usual SaaS black. */
+  --color-bg: #0d0814;
+  --color-bg-soft: #140d1e;
+  --color-surface: #1b1228;
+  --color-border: rgba(232, 216, 255, 0.09);
+  --color-brand: #ff5e9c;        /* hot coral-pink */
+  --color-brand-light: #ffa6cd;  /* light pink highlight */
+  --color-accent: #c77dff;       /* electric lilac */
+  --color-accent-2: #ff4dd8;     /* magenta glow */
+  --color-text: #f4eff7;         /* cool ivory */
+  --color-muted: #a99fb5;        /* mauve gray */
+  --ink: #190d24;                /* dark plum, for text on bright fills */
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --animate-aurora: aurora 20s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@keyframes aurora {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6%, -8%) scale(1.15); }
+  66% { transform: translate(-6%, 6%) scale(0.95); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+:root {
+  --ink: #190d24; /* dark plum, for text on bright fills */
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(255, 94, 156, 0.32);
+  color: #fff;
+}
+
+/* Gradient text for highlighted words / brand accents. */
+.text-gradient {
+  background: linear-gradient(100deg, var(--color-brand-light) 0%, var(--color-brand) 45%, var(--color-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Frosted-glass surface. */
+.glass {
+  background: rgba(244, 239, 247, 0.025);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+}
+
+/* Card with electric hover glow. */
+.card {
+  background: linear-gradient(180deg, rgba(244, 239, 247, 0.045), rgba(244, 239, 247, 0.01));
+  border: 1px solid var(--color-border);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 94, 156, 0.45);
+  box-shadow: 0 20px 60px -20px rgba(255, 77, 216, 0.45);
+}
+
+/* Primary button — coral-pink to lilac with electric glow. */
+.btn-primary {
+  background: linear-gradient(100deg, var(--color-brand) 0%, var(--color-accent) 100%);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 10px 30px -8px rgba(255, 77, 216, 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.07);
+  box-shadow: 0 14px 40px -8px rgba(255, 77, 216, 0.72);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Soft grid overlay for the hero. */
+.grid-overlay {
+  background-image:
+    linear-gradient(to right, rgba(232, 216, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(232, 216, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 75%);
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
